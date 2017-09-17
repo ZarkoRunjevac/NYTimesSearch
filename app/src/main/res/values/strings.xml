@@ -1,5 +1,20 @@
 <resources>
-  <string name="app_name">NYTimesSearch</string>
-  <string name="hint">Enter search query</string>
-  <string name="search">Search</string>
+    <string name="app_name">NYTimesSearch</string>
+    <string name="hint">Enter search query</string>
+    <string name="search">Search</string>
+    <string name="begin_date_label">Begin Date</string>
+    <string name="sort_order_label">Sort Order</string>
+    <string name="sort_order_newest">Newest</string>
+    <string name="sort_order_oldest">Oldest</string>
+    <string name="news_desk_values_label">News Desk Values</string>
+    <string name="Arts" >Arts</string>
+    <string name="Sports">Sports</string>
+    <string name="Politics">Politics</string>
+    <string name="button_save">Save</string>
+    <string name="button_cancel">Cancel</string>
+
+    <string-array name="sort_orders_array">
+        <item>@string/sort_order_oldest</item>
+        <item>@string/sort_order_newest</item>
+    </string-array>
 </resources>
