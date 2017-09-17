@@ -1,21 +1,21 @@
 package com.zarkorunjevac.nytimessearch.models;
 
 
-import android.graphics.Movie;
 import android.util.Log;
-import java.io.Serializable;
-import java.lang.ref.SoftReference;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Article implements Serializable {
   private final static String TAG=Article.class.getCanonicalName();
-  private final String BASE_URL="https://www.nytimes.com/";
+  private final String BASE_URL="http://www.nytimes.com/";
 
   private String webUrl;
   private String snippet;
