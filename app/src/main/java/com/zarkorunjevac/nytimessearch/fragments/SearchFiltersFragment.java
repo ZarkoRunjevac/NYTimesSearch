@@ -1,19 +1,13 @@
 package com.zarkorunjevac.nytimessearch.fragments;
 
-import static com.zarkorunjevac.nytimessearch.R.id.dpDate;
-import static com.zarkorunjevac.nytimessearch.R.id.tvBeginDate;
-
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,17 +15,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
 import android.widget.Spinner;
+
 import com.zarkorunjevac.nytimessearch.R;
+import com.zarkorunjevac.nytimessearch.utils.Constants;
+import com.zarkorunjevac.nytimessearch.utils.Utils;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.zarkorunjevac.nytimessearch.utils.Constants;
-import com.zarkorunjevac.nytimessearch.utils.Utils;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Created by zarkorunjevac on 17/09/17.
@@ -89,17 +83,12 @@ public class SearchFiltersFragment extends DialogFragment {
         btnSave.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(getActivity());
-                Editor edit=pref.edit();
-                edit.putString(Constants.BEGIN_DATE,tvBeginDate.getText().toString());
-                edit.putInt(Constants.SORT_ORDER,spSortOrder.getSelectedItemPosition());
-                edit.putBoolean(Constants.ARTS,cbArts.isChecked());
-                edit.putBoolean(Constants.SPORTS,cbSports.isChecked());
-                edit.putBoolean(Constants.POLITICS,cbPolitics.isChecked());
-                edit.commit();
+                saveSettings();
                 dismiss();
             }
         });
+
+        loadSettings();
 
         return view;
     }
@@ -122,4 +111,27 @@ public class SearchFiltersFragment extends DialogFragment {
             tvBeginDate.setText(dateString);
         }
     }
+    private void saveSettings(){
+        SharedPreferences pref= PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor edit=pref.edit();
+        edit.putString(Constants.BEGIN_DATE,tvBeginDate.getText().toString());
+        edit.putInt(Constants.SORT_ORDER,spSortOrder.getSelectedItemPosition());
+        edit.putBoolean(Constants.ARTS,cbArts.isChecked());
+        edit.putBoolean(Constants.SPORTS,cbSports.isChecked());
+        edit.putBoolean(Constants.POLITICS,cbPolitics.isChecked());
+        edit.commit();
+    }
+
+    private void loadSettings(){
+        SharedPreferences pref= PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        tvBeginDate.setText(pref.getString(Constants.BEGIN_DATE,""));
+        spSortOrder.setSelection(pref.getInt(Constants.SORT_ORDER,0));
+        cbArts.setChecked(pref.getBoolean(Constants.ARTS,false));
+        cbSports.setChecked(pref.getBoolean(Constants.SPORTS,false));
+        cbPolitics.setChecked(pref.getBoolean(Constants.POLITICS,false));
+
+    }
+
 }

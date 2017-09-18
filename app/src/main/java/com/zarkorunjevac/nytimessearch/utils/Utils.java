@@ -13,6 +13,9 @@ public class Utils {
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy",
       Locale.getDefault());
 
+  private static final SimpleDateFormat DATE_FORMAT_FOR_QUERY=new SimpleDateFormat("yyyyMMdd",
+      Locale.getDefault());
+
   public static Calendar dateFromString(String dateString){
     Calendar date = Calendar.getInstance();
     try {
@@ -26,6 +29,10 @@ public class Utils {
 
   public static String stringFromDate(Date date){
     return DATE_FORMAT.format(date);
+  }
+
+  public static String queryStringFromDate(Date date){
+      return DATE_FORMAT_FOR_QUERY.format(date);
   }
 
 
