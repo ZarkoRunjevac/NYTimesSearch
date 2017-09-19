@@ -24,6 +24,7 @@ import com.zarkorunjevac.nytimessearch.adapters.ArticleArrayAdapter;
 import com.zarkorunjevac.nytimessearch.fragments.SearchFiltersFragment;
 import com.zarkorunjevac.nytimessearch.models.Article;
 import com.zarkorunjevac.nytimessearch.utils.Constants;
+import com.zarkorunjevac.nytimessearch.utils.EndlessScrollListener;
 import com.zarkorunjevac.nytimessearch.utils.Utils;
 
 import org.json.JSONArray;
@@ -48,9 +49,11 @@ public class SearchActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     ArrayList<Article> articles;
-    ArticleArrayAdapter adpter;
+    ArticleArrayAdapter adapter;
 
     public static final String TAG = SearchActivity.class.getCanonicalName();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +65,8 @@ public class SearchActivity extends AppCompatActivity {
 
         articles = new ArrayList<>();
 
-        adpter = new ArticleArrayAdapter(this, articles);
-        gvResults.setAdapter(adpter);
+        adapter = new ArticleArrayAdapter(this, articles);
+        gvResults.setAdapter(adapter);
 
         gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -79,15 +82,34 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        gvResults.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public boolean onLoadMore(int page, int totalItemsCount) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to your AdapterView
+                Log.d(TAG, "onLoadMore: page="+page);
+                loadNextDataFromApi(page);
+                // or loadNextDataFromApi(totalItemsCount);
+                return true; // ONLY if more data is actually being loaded; false otherwise.
+            }
+        });
+
     }
 
     public void onArticleSearch(View view) {
+        adapter.clear();
+        articles.clear();
+        loadNextDataFromApi(0);
 
 
+    }
+
+
+    private void loadNextDataFromApi(int page){
         AsyncHttpClient client = new AsyncHttpClient();
 
         String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-        RequestParams params = makeParams();
+        RequestParams params = makeParams(page);
 
 
         client.get(url, params, new JsonHttpResponseHandler() {
@@ -98,9 +120,9 @@ public class SearchActivity extends AppCompatActivity {
 
                 try {
                     articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
-                    articles.clear();
-                    articles.addAll(Article.fromJSONARRay(articleJsonResults));
-                    adpter.addAll(articles);
+                    ArrayList<Article> newArticles=Article.fromJSONARRay(articleJsonResults);
+                    articles.addAll(newArticles);
+                    adapter.notifyDataSetChanged();
                     Log.d(TAG, "onSuccess: " + articles.toString());
                 } catch (JSONException e) {
                     Log.e(TAG, "onSuccess: ", e);
@@ -109,6 +131,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -129,11 +152,11 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private RequestParams makeParams() {
+    private RequestParams makeParams(int page) {
         String query = etQuery.getText().toString();
         RequestParams params = new RequestParams();
         params.add("api-key", "f8503cc0ea264dab82c1270bc88c96ce");
-        params.put("page", 0);
+        params.put("page", page);
         params.put("q", query);
 
         //load settings
@@ -141,14 +164,16 @@ public class SearchActivity extends AppCompatActivity {
         SharedPreferences pref = PreferenceManager
                 .getDefaultSharedPreferences(this);
         String beginDate = pref.getString(Constants.BEGIN_DATE, "");
-        Calendar calendar = Utils.dateFromString(beginDate);
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        if(!TextUtils.isEmpty(beginDate)){
+            Calendar calendar = Utils.dateFromString(beginDate);
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+            String queryDate=Utils.queryStringFromDate(calendar.getTime());
+            params.put("begin_date", queryDate);
+        }
 
-        String queryDate=Utils.queryStringFromDate(calendar.getTime());
-        params.put("begin_date", queryDate);
         String sortOrder = "oldest";
         if (pref.getInt(Constants.SORT_ORDER, 0) != 0) {
             sortOrder = "newest";

@@ -75,6 +75,10 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
                     .load(thumbnail)
                     .placeholder(R.drawable.placeholder)
                     .into(viewHolder.ivImage);
+        }else{
+            Picasso.with(getContext())
+                .load(R.drawable.placeholder)
+                .into(viewHolder.ivImage);
         }
 
         return convertView;
