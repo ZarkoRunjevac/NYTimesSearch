@@ -146,7 +146,6 @@ public class SearchActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        //String queryDate = String.valueOf(year) + String.valueOf(month) + String.valueOf(day);
 
         String queryDate=Utils.queryStringFromDate(calendar.getTime());
         params.put("begin_date", queryDate);
