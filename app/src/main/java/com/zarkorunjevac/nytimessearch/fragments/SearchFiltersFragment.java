@@ -19,7 +19,7 @@ import android.widget.Spinner;
 
 import com.zarkorunjevac.nytimessearch.R;
 import com.zarkorunjevac.nytimessearch.utils.Constants;
-import com.zarkorunjevac.nytimessearch.utils.Utils;
+import com.zarkorunjevac.nytimessearch.utils.DateUtils;
 
 import java.util.Date;
 
@@ -65,7 +65,7 @@ public class SearchFiltersFragment extends DialogFragment {
                 Date date=null;
                 String dateString=tvBeginDate.getText().toString();
                 if( dateString!=null && !TextUtils.isEmpty(dateString)){
-                    date= Utils.dateFromString(dateString).getTime();
+                    date= DateUtils.dateFromString(dateString).getTime();
                 }
                 DatePickerFragment dialog=DatePickerFragment.newInstance(date);
                 dialog.setTargetFragment(SearchFiltersFragment.this,REQUEST_DATE);
@@ -107,7 +107,7 @@ public class SearchFiltersFragment extends DialogFragment {
 
         if(requestCode==REQUEST_DATE){
             Date date=(Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-            String dateString=Utils.stringFromDate(date);
+            String dateString= DateUtils.stringFromDate(date);
             tvBeginDate.setText(dateString);
         }
     }

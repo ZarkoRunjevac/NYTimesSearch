@@ -9,7 +9,7 @@ import java.util.Locale;
  * Created by zarko.runjevac on 9/18/2017.
  */
 
-public class Utils {
+public class DateUtils {
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy",
       Locale.getDefault());
 

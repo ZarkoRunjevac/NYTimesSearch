@@ -1,9 +1,12 @@
 package com.zarkorunjevac.nytimessearch.activities;
 
+
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -25,8 +28,9 @@ import com.zarkorunjevac.nytimessearch.fragments.SearchFiltersFragment;
 import com.zarkorunjevac.nytimessearch.models.Article;
 import com.zarkorunjevac.nytimessearch.utils.Constants;
 import com.zarkorunjevac.nytimessearch.utils.EndlessScrollListener;
-import com.zarkorunjevac.nytimessearch.utils.Utils;
+import com.zarkorunjevac.nytimessearch.utils.DateUtils;
 
+import com.zarkorunjevac.nytimessearch.utils.NetworkUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +51,8 @@ public class SearchActivity extends AppCompatActivity {
     Button btnSearch;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    private Snackbar snackbar;
 
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
@@ -106,30 +112,34 @@ public class SearchActivity extends AppCompatActivity {
 
 
     private void loadNextDataFromApi(int page){
-        AsyncHttpClient client = new AsyncHttpClient();
 
-        String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-        RequestParams params = makeParams(page);
+        if(NetworkUtils.isOnline(this,gvResults,snackbar)){
+            AsyncHttpClient client = new AsyncHttpClient();
+
+            String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+            RequestParams params = makeParams(page);
 
 
-        client.get(url, params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d(TAG, "onSuccess: " + response.toString());
-                JSONArray articleJsonResults = null;
+            client.get(url, params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Log.d(TAG, "onSuccess: " + response.toString());
+                    JSONArray articleJsonResults = null;
 
-                try {
-                    articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
-                    ArrayList<Article> newArticles=Article.fromJSONARRay(articleJsonResults);
-                    articles.addAll(newArticles);
-                    adapter.notifyDataSetChanged();
-                    Log.d(TAG, "onSuccess: " + articles.toString());
-                } catch (JSONException e) {
-                    Log.e(TAG, "onSuccess: ", e);
+                    try {
+                        articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
+                        ArrayList<Article> newArticles=Article.fromJSONARRay(articleJsonResults);
+                        articles.addAll(newArticles);
+                        adapter.notifyDataSetChanged();
+                        Log.d(TAG, "onSuccess: " + articles.toString());
+                    } catch (JSONException e) {
+                        Log.e(TAG, "onSuccess: ", e);
+                    }
+
                 }
+            });
+        }
 
-            }
-        });
     }
 
 
@@ -165,12 +175,12 @@ public class SearchActivity extends AppCompatActivity {
                 .getDefaultSharedPreferences(this);
         String beginDate = pref.getString(Constants.BEGIN_DATE, "");
         if(!TextUtils.isEmpty(beginDate)){
-            Calendar calendar = Utils.dateFromString(beginDate);
+            Calendar calendar = DateUtils.dateFromString(beginDate);
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            String queryDate=Utils.queryStringFromDate(calendar.getTime());
+            String queryDate= DateUtils.queryStringFromDate(calendar.getTime());
             params.put("begin_date", queryDate);
         }
 
@@ -195,4 +205,6 @@ public class SearchActivity extends AppCompatActivity {
         Log.d(TAG, "makeParams: params=" + params.toString());
         return params;
     }
+
+
 }

@@ -17,4 +17,7 @@
         <item>@string/sort_order_oldest</item>
         <item>@string/sort_order_newest</item>
     </string-array>
+
+    <string name="no_network">No network connectivity.</string>
+    <string name="offline">No internet connectivity</string>
 </resources>

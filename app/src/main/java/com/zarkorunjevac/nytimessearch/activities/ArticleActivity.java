@@ -1,5 +1,6 @@
 package com.zarkorunjevac.nytimessearch.activities;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebResourceRequest;
@@ -9,10 +10,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.zarkorunjevac.nytimessearch.R;
 import com.zarkorunjevac.nytimessearch.models.Article;
+import com.zarkorunjevac.nytimessearch.utils.NetworkUtils;
 
 public class ArticleActivity extends AppCompatActivity {
 
   @BindView(R.id.wvArticle)WebView wvArticle;
+  Snackbar snackbar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +24,15 @@ public class ArticleActivity extends AppCompatActivity {
     ButterKnife.bind(this);
 
     final Article article=(Article)getIntent().getSerializableExtra("article");
-    wvArticle.setWebViewClient(new WebViewClient(){
-      @Override
-      public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        view.loadUrl(url);
-        return true;
-      }
-    });
-    wvArticle.loadUrl(article.getWebUrl());
-
+    if(NetworkUtils.isOnline(this,wvArticle,snackbar)) {
+      wvArticle.setWebViewClient(new WebViewClient() {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+          view.loadUrl(url);
+          return true;
+        }
+      });
+      wvArticle.loadUrl(article.getWebUrl());
+    }
   }
 }
