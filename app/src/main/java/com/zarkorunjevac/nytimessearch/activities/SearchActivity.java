@@ -7,7 +7,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -43,12 +46,9 @@ import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class SearchActivity extends AppCompatActivity {
-    @BindView(R.id.etQuery)
-    EditText etQuery;
+
     @BindView(R.id.gvResults)
     GridView gvResults;
-    @BindView(R.id.btnSearch)
-    Button btnSearch;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -56,6 +56,7 @@ public class SearchActivity extends AppCompatActivity {
 
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
+    private String query;
 
     public static final String TAG = SearchActivity.class.getCanonicalName();
 
@@ -70,6 +71,7 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         articles = new ArrayList<>();
+        query="";
 
         adapter = new ArticleArrayAdapter(this, articles);
         gvResults.setAdapter(adapter);
@@ -116,7 +118,7 @@ public class SearchActivity extends AppCompatActivity {
         if(NetworkUtils.isOnline(this,gvResults,snackbar)){
             AsyncHttpClient client = new AsyncHttpClient();
 
-            String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+            String url =Constants.SEARCH_URL;
             RequestParams params = makeParams(page);
 
 
@@ -146,7 +148,28 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        MenuItem searchItem=menu.findItem(R.id.action_search);
+
+        final SearchView searchView=(SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(!TextUtils.isEmpty(query)){
+                    SearchActivity.this.query=query;
+                    adapter.clear();
+                    articles.clear();
+                    loadNextDataFromApi(0);
+                    searchView.clearFocus();
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -163,7 +186,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private RequestParams makeParams(int page) {
-        String query = etQuery.getText().toString();
+
         RequestParams params = new RequestParams();
         params.add("api-key", "f8503cc0ea264dab82c1270bc88c96ce");
         params.put("page", page);
