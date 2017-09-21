@@ -104,15 +104,6 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    public void onArticleSearch(View view) {
-        adapter.clear();
-        articles.clear();
-        loadNextDataFromApi(0);
-
-
-    }
-
-
     private void loadNextDataFromApi(int page){
 
         if(NetworkUtils.isOnline(this,gvResults,snackbar)){
