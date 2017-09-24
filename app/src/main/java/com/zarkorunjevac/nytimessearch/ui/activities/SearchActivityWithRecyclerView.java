@@ -22,9 +22,9 @@ import com.loopj.android.http.RequestParams;
 import com.zarkorunjevac.nytimessearch.R;
 import com.zarkorunjevac.nytimessearch.adapters.ArticleAdapter;
 import com.zarkorunjevac.nytimessearch.databinding.ActivitySearchWithRecyclerViewBinding;
-import com.zarkorunjevac.nytimessearch.ui.fragments.SearchFiltersFragment;
 import com.zarkorunjevac.nytimessearch.models.Article;
 import com.zarkorunjevac.nytimessearch.ui.callback.ArticleClickCallback;
+import com.zarkorunjevac.nytimessearch.ui.fragments.SearchFiltersFragment;
 import com.zarkorunjevac.nytimessearch.utils.Constants;
 import com.zarkorunjevac.nytimessearch.utils.DateUtils;
 import com.zarkorunjevac.nytimessearch.utils.EndlessRecyclerViewScrollListener;
@@ -33,6 +33,7 @@ import com.zarkorunjevac.nytimessearch.utils.NetworkUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -88,7 +89,7 @@ public class SearchActivityWithRecyclerView extends AppCompatActivity {
         public void onClick(Article article) {
             Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
 
-            intent.putExtra("article", article);
+            intent.putExtra("article", Parcels.wrap(article));
 
             startActivity(intent);
         }

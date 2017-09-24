@@ -25,16 +25,17 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.zarkorunjevac.nytimessearch.R;
 import com.zarkorunjevac.nytimessearch.adapters.ArticleArrayAdapter;
-import com.zarkorunjevac.nytimessearch.ui.fragments.SearchFiltersFragment;
 import com.zarkorunjevac.nytimessearch.models.Article;
+import com.zarkorunjevac.nytimessearch.ui.fragments.SearchFiltersFragment;
 import com.zarkorunjevac.nytimessearch.utils.Constants;
-import com.zarkorunjevac.nytimessearch.utils.EndlessScrollListener;
 import com.zarkorunjevac.nytimessearch.utils.DateUtils;
-
+import com.zarkorunjevac.nytimessearch.utils.EndlessScrollListener;
 import com.zarkorunjevac.nytimessearch.utils.NetworkUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -81,7 +82,7 @@ public class SearchActivityWithGridView extends AppCompatActivity {
 
                 Article article = articles.get(i);
 
-                intent.putExtra("article", article);
+                intent.putExtra("article", Parcels.wrap(article));
 
                 startActivity(intent);
 

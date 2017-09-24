@@ -7,14 +7,12 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-public class Article implements Serializable {
+@Parcel
+public class Article  {
   private final static String TAG=Article.class.getCanonicalName();
   private final String BASE_URL="http://www.nytimes.com/";
 
@@ -22,9 +20,9 @@ public class Article implements Serializable {
   private String snippet;
 
   private String source;
-  private List<Object> multimedia = null;
+  //private List<Object> multimedia = null;
   private String headline;
-  private List<Object> keywords = null;
+  //private List<Object> keywords = null;
   private String pubDate;
   private String documentType;
   private String newDesk;
@@ -34,7 +32,12 @@ public class Article implements Serializable {
   private Integer wordCount;
   private Integer score;
   private String uri;
-  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+  //private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+
+  public Article(){
+
+  }
 
   public Article(JSONObject jsonObject){
     try {
@@ -98,13 +101,13 @@ public class Article implements Serializable {
     this.source = source;
   }
 
-  public List<Object> getMultimedia() {
-    return multimedia;
-  }
-
-  public void setMultimedia(List<Object> multimedia) {
-    this.multimedia = multimedia;
-  }
+//  public List<Object> getMultimedia() {
+//    return multimedia;
+//  }
+//
+//  public void setMultimedia(List<Object> multimedia) {
+//    this.multimedia = multimedia;
+//  }
 
   public String getHeadline() {
     return headline;
@@ -114,13 +117,13 @@ public class Article implements Serializable {
     this.headline = headline;
   }
 
-  public List<Object> getKeywords() {
-    return keywords;
-  }
-
-  public void setKeywords(List<Object> keywords) {
-    this.keywords = keywords;
-  }
+//  public List<Object> getKeywords() {
+//    return keywords;
+//  }
+//
+//  public void setKeywords(List<Object> keywords) {
+//    this.keywords = keywords;
+//  }
 
   public String getPubDate() {
     return pubDate;
@@ -188,13 +191,13 @@ public class Article implements Serializable {
     this.uri = uri;
   }
 
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
-  }
-
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-  }
+//  public Map<String, Object> getAdditionalProperties() {
+//    return this.additionalProperties;
+//  }
+//
+//  public void setAdditionalProperty(String name, Object value) {
+//    this.additionalProperties.put(name, value);
+//  }
 
 
   public String getThumbnail() {
