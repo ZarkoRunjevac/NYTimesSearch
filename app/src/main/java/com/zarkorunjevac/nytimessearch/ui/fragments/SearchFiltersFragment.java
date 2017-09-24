@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -73,19 +72,11 @@ public class SearchFiltersFragment extends DialogFragment {
             }
         });
 
-        btnCancel.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        btnCancel.setOnClickListener(view1 -> dismiss());
 
-        btnSave.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveSettings();
-                dismiss();
-            }
+        btnSave.setOnClickListener(view2 -> {
+            saveSettings();
+            dismiss();
         });
 
         loadSettings();

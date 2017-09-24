@@ -16,16 +16,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.zarkorunjevac.nytimessearch.R;
-import com.zarkorunjevac.nytimessearch.ui.adapters.ArticleArrayAdapter;
 import com.zarkorunjevac.nytimessearch.models.Article;
+import com.zarkorunjevac.nytimessearch.ui.adapters.ArticleArrayAdapter;
 import com.zarkorunjevac.nytimessearch.ui.fragments.SearchFiltersFragment;
 import com.zarkorunjevac.nytimessearch.utils.Constants;
 import com.zarkorunjevac.nytimessearch.utils.DateUtils;
@@ -75,18 +73,15 @@ public class SearchActivityWithGridView extends AppCompatActivity {
         adapter = new ArticleArrayAdapter(this, articles);
         gvResults.setAdapter(adapter);
 
-        gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
+        gvResults.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
 
-                Article article = articles.get(i);
+            Article article = articles.get(i);
 
-                intent.putExtra("article", Parcels.wrap(article));
+            intent.putExtra("article", Parcels.wrap(article));
 
-                startActivity(intent);
+            startActivity(intent);
 
-            }
         });
 
         gvResults.setOnScrollListener(new EndlessScrollListener() {

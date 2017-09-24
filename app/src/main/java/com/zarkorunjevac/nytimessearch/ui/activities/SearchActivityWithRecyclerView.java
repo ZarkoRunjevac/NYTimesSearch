@@ -84,15 +84,12 @@ public class SearchActivityWithRecyclerView extends AppCompatActivity {
 
     }
 
-    private final ArticleClickCallback mArticleClickCallback = new ArticleClickCallback() {
-        @Override
-        public void onClick(Article article) {
-            Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
+    private final ArticleClickCallback mArticleClickCallback = article -> {
+        Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
 
-            intent.putExtra("article", Parcels.wrap(article));
+        intent.putExtra("article", Parcels.wrap(article));
 
-            startActivity(intent);
-        }
+        startActivity(intent);
     };
 
     private void loadNextDataFromApi(final int page) {
