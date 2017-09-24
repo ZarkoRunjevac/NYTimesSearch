@@ -1,7 +1,6 @@
 package com.zarkorunjevac.nytimessearch.ui.activities;
 
 
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +15,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -73,15 +74,18 @@ public class SearchActivityWithGridView extends AppCompatActivity {
         adapter = new ArticleArrayAdapter(this, articles);
         gvResults.setAdapter(adapter);
 
-        gvResults.setOnItemClickListener((adapterView, view, i, l) -> {
-            Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
+        gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
 
-            Article article = articles.get(i);
+                Article article = articles.get(i);
 
-            intent.putExtra("article", Parcels.wrap(article));
+                intent.putExtra("article", Parcels.wrap(article));
 
-            startActivity(intent);
+                startActivity(intent);
 
+            }
         });
 
         gvResults.setOnScrollListener(new EndlessScrollListener() {

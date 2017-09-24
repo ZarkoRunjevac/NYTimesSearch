@@ -1,11 +1,17 @@
 package com.zarkorunjevac.nytimessearch.ui.activities;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -20,9 +26,9 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.zarkorunjevac.nytimessearch.R;
-import com.zarkorunjevac.nytimessearch.ui.adapters.ArticleAdapter;
 import com.zarkorunjevac.nytimessearch.databinding.ActivitySearchWithRecyclerViewBinding;
 import com.zarkorunjevac.nytimessearch.models.Article;
+import com.zarkorunjevac.nytimessearch.ui.adapters.ArticleAdapter;
 import com.zarkorunjevac.nytimessearch.ui.callback.ArticleClickCallback;
 import com.zarkorunjevac.nytimessearch.ui.fragments.SearchFiltersFragment;
 import com.zarkorunjevac.nytimessearch.utils.Constants;
@@ -33,7 +39,6 @@ import com.zarkorunjevac.nytimessearch.utils.NetworkUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -84,13 +89,33 @@ public class SearchActivityWithRecyclerView extends AppCompatActivity {
 
     }
 
-    private final ArticleClickCallback mArticleClickCallback = article -> {
-        Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
 
-        intent.putExtra("article", Parcels.wrap(article));
+    private final ArticleClickCallback mArticleClickCallback = new ArticleClickCallback() {
+        @Override
+        public void onClick(Article article) {
 
-        startActivity(intent);
-    };
+            Bitmap bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.ic_share);
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, article.getWebUrl());
+
+            int requestCode = 100;
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(SearchActivityWithRecyclerView.this,
+                    requestCode,
+                    shareIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            CustomTabsIntent.Builder builder=new CustomTabsIntent.Builder();
+            builder.setToolbarColor(ContextCompat.getColor(SearchActivityWithRecyclerView.this, R.color.colorAccent));
+            builder.setActionButton(bitmap, "Share Link", pendingIntent, true);
+            CustomTabsIntent customTabsIntent=builder.build();
+
+            customTabsIntent.launchUrl(SearchActivityWithRecyclerView.this, Uri.parse(article.getWebUrl()));
+        }
+        };
+
 
     private void loadNextDataFromApi(final int page) {
 

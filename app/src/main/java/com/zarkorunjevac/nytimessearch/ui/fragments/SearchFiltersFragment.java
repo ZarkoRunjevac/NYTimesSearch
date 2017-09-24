@@ -72,11 +72,19 @@ public class SearchFiltersFragment extends DialogFragment {
             }
         });
 
-        btnCancel.setOnClickListener(view1 -> dismiss());
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
 
-        btnSave.setOnClickListener(view2 -> {
-            saveSettings();
-            dismiss();
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveSettings();
+                dismiss();
+            }
         });
 
         loadSettings();
