@@ -20,7 +20,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.zarkorunjevac.nytimessearch.R;
-import com.zarkorunjevac.nytimessearch.adapters.ArticleAdapter;
+import com.zarkorunjevac.nytimessearch.ui.adapters.ArticleAdapter;
 import com.zarkorunjevac.nytimessearch.databinding.ActivitySearchWithRecyclerViewBinding;
 import com.zarkorunjevac.nytimessearch.models.Article;
 import com.zarkorunjevac.nytimessearch.ui.callback.ArticleClickCallback;

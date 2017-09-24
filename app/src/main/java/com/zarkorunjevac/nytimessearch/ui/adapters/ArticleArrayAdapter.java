@@ -1,4 +1,4 @@
-package com.zarkorunjevac.nytimessearch.adapters;
+package com.zarkorunjevac.nytimessearch.ui.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

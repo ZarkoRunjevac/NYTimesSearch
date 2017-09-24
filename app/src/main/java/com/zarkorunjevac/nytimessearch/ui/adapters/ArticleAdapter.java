@@ -1,4 +1,4 @@
-package com.zarkorunjevac.nytimessearch.adapters;
+package com.zarkorunjevac.nytimessearch.ui.adapters;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.zarkorunjevac.nytimessearch.R;
 import com.zarkorunjevac.nytimessearch.databinding.ItemArticleWithImageBinding;
 import com.zarkorunjevac.nytimessearch.databinding.ItemArticleWithoutImageBinding;
@@ -116,10 +116,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             Article article=mArticleList.get(position);
             viewHolder1.binding.setArticle(article);
             String thumbnail=article.getThumbnail();
-            Picasso.with(mContext.get())
+
+            Glide.with(mContext.get())
                     .load(thumbnail)
-                    .placeholder(R.drawable.placeholder)
                     .into(viewHolder1.binding.ivImage);
+
+
+
             viewHolder1.binding.executePendingBindings();
 
         }else{
