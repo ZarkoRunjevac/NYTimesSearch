@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#3F51B5</color>
-  <color name="colorPrimaryDark">#303F9F</color>
-  <color name="colorAccent">#FF4081</color>
+    <color name="theme_red_background">#ff8a80</color>
+    <color name="theme_red_primary">#ff5252</color>
+    <color name="theme_red_accent">#fffc19</color>
+    <color name="theme_red_text">@android:color/white</color>
+    <color name="theme_red_primary_dark">#e64a4a</color>
+    <color name="theme_text_dark">#616161</color>
 </resources>

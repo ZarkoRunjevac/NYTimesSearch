@@ -21,6 +21,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -35,6 +37,7 @@ import com.zarkorunjevac.nytimessearch.utils.Constants;
 import com.zarkorunjevac.nytimessearch.utils.DateUtils;
 import com.zarkorunjevac.nytimessearch.utils.EndlessRecyclerViewScrollListener;
 import com.zarkorunjevac.nytimessearch.utils.NetworkUtils;
+import com.zarkorunjevac.nytimessearch.utils.SpacesItemDecoration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,8 +73,13 @@ public class SearchActivityWithRecyclerView extends AppCompatActivity {
 
         setSupportActionBar(mBinding.toolbar);
 
+        mBinding.toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.theme_text_dark));
+
         mArticleAdapter = new ArticleAdapter(this,mArticleClickCallback);
         StaggeredGridLayoutManager staggeredGridLayoutManager=new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
+        SpacesItemDecoration decoration = new SpacesItemDecoration(16);
+        mBinding.rvArticles.addItemDecoration(decoration);
 
         mBinding.rvArticles.setLayoutManager(staggeredGridLayoutManager);
 
@@ -108,7 +116,7 @@ public class SearchActivityWithRecyclerView extends AppCompatActivity {
                     PendingIntent.FLAG_UPDATE_CURRENT);
 
             CustomTabsIntent.Builder builder=new CustomTabsIntent.Builder();
-            builder.setToolbarColor(ContextCompat.getColor(SearchActivityWithRecyclerView.this, R.color.colorAccent));
+            builder.setToolbarColor(ContextCompat.getColor(SearchActivityWithRecyclerView.this, R.color.theme_red_primary));
             builder.setActionButton(bitmap, "Share Link", pendingIntent, true);
             CustomTabsIntent customTabsIntent=builder.build();
 
@@ -160,6 +168,15 @@ public class SearchActivityWithRecyclerView extends AppCompatActivity {
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        int searchImgId = android.support.v7.appcompat.R.id.search_button;
+        ImageView v = (ImageView) searchView.findViewById(searchImgId);
+        v.setImageResource(R.drawable.ic_search);
+        int searchEditId = android.support.v7.appcompat.R.id.search_src_text;
+        EditText et = (EditText) searchView.findViewById(searchEditId);
+        et.setTextColor(ContextCompat.getColor(this,R.color.theme_text_dark));
+        et.setHintTextColor(ContextCompat.getColor(this,R.color.theme_red_text));
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

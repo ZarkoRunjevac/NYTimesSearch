@@ -3,6 +3,8 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:id="@+id/dpDate"
     android:datePickerMode="spinner"
+    android:background="@color/theme_red_background"
+            android:calendarTextColor="@color/theme_text_dark"
     android:calendarViewShown="false">
 
 </DatePicker>

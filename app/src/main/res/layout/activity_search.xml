@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/theme_red_primary_dark"
     tools:context="com.zarkorunjevac.nytimessearch.ui.activities.SearchActivityWithGridView">
 
     <android.support.v7.widget.Toolbar
@@ -14,12 +15,13 @@
         android:layout_marginRight="0dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-
+        android:titleTextColor="@color/theme_text_dark"
+        style="@style/NYTimesSearch.TextAppearance.Title"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@android:color/white"></android.support.v7.widget.Toolbar>
+        ></android.support.v7.widget.Toolbar>
 
     <GridView
         android:id="@+id/gvResults"
@@ -30,7 +32,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-      android:numColumns="4"
+        android:numColumns="4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"

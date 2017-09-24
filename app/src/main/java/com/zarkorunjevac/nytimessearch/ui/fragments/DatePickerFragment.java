@@ -47,6 +47,7 @@ public class DatePickerFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
 
+
         Date date=(Date)getArguments().getSerializable(ARG_DATE);
 
         Calendar calendar=Calendar.getInstance();
@@ -63,7 +64,7 @@ public class DatePickerFragment extends DialogFragment {
 
         dpDate.init(year, month,day,null);
 
-        return new AlertDialog.Builder(getActivity())
+        return new AlertDialog.Builder(getActivity(),R.style.AlertDialogTheme)
                 .setView(view)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
@@ -76,6 +77,7 @@ public class DatePickerFragment extends DialogFragment {
                     }
                 })
                 .create();
+
     }
 
     @Override

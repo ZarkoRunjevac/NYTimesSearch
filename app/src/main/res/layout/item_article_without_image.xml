@@ -16,7 +16,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@color/theme_red_primary"
         android:onClick="@{() ->  callback.onClick(article)}"
+
         android:padding="8dp">
 
         <TextView
@@ -25,6 +27,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="4"
+            android:textAppearance="@style/NYTimesSearch.TextAppearance.Title"
             android:text="@{article.headline}"/>
 
         <TextView
@@ -33,6 +36,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/theme_red_text"
             android:text="@{article.snippet}"/>
     </LinearLayout>
 

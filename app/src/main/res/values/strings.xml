@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">NYTimesSearch</string>
+  <string name="app_name">NY Times Search</string>
   <string name="hint">Enter search query</string>
   <string name="search">Search</string>
   <string name="begin_date_label">Begin Date</string>
