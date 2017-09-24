@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="com.zarkorunjevac.nytimessearch.activities.ArticleActivity">
+  tools:context="com.zarkorunjevac.nytimessearch.ui.activities.ArticleActivity">
   <android.support.v7.widget.Toolbar
     android:id="@+id/toolbar"
     android:layout_width="0dp"

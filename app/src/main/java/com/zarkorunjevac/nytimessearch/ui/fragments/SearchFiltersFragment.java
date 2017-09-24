@@ -1,4 +1,4 @@
-package com.zarkorunjevac.nytimessearch.fragments;
+package com.zarkorunjevac.nytimessearch.ui.fragments;
 
 import android.app.Activity;
 import android.app.DialogFragment;

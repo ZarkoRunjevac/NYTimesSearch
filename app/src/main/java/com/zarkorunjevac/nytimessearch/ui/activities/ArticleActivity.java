@@ -1,4 +1,4 @@
-package com.zarkorunjevac.nytimessearch.activities;
+package com.zarkorunjevac.nytimessearch.ui.activities;
 
 import android.content.Intent;
 import android.support.design.widget.Snackbar;

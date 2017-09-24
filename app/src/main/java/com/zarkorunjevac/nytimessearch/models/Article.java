@@ -1,6 +1,7 @@
 package com.zarkorunjevac.nytimessearch.models;
 
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -49,6 +50,9 @@ public class Article implements Serializable {
         this.thumbnail="";
       }
 
+      this.snippet=jsonObject.getString("snippet");
+        this.id=jsonObject.getString("_id");
+
     }catch (JSONException e){
 
     }
@@ -65,6 +69,9 @@ public class Article implements Serializable {
     return articles;
   }
 
+  public boolean hasImage(){
+      return !TextUtils.isEmpty(this.getThumbnail());
+  }
 
   public String getWebUrl() {
     return webUrl;

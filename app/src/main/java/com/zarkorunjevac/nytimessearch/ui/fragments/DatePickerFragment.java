@@ -1,7 +1,4 @@
-package com.zarkorunjevac.nytimessearch.fragments;
-
-import static com.zarkorunjevac.nytimessearch.R.id.btnCancel;
-import static com.zarkorunjevac.nytimessearch.R.id.btnSave;
+package com.zarkorunjevac.nytimessearch.ui.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,18 +9,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.DatePicker;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.zarkorunjevac.nytimessearch.R;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by zarkorunjevac on 17/09/17.

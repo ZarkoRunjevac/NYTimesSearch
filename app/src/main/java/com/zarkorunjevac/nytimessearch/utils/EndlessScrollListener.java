@@ -1,9 +1,5 @@
 package com.zarkorunjevac.nytimessearch.utils;
 
-import android.widget.AbsListView.OnScrollListener;
-
-
-
 import android.widget.AbsListView;
 
 public abstract class EndlessScrollListener implements AbsListView.OnScrollListener {
@@ -56,7 +52,7 @@ public abstract class EndlessScrollListener implements AbsListView.OnScrollListe
     // the visibleThreshold and need to reload more data.
     // If we do need to reload some more data, we execute onLoadMore to fetch the data.
     if (!loading && (firstVisibleItem + visibleItemCount + visibleThreshold) >= totalItemCount ) {
-      loading = onLoadMore(currentPage + 1, totalItemCount);
+      loading = onLoadMore(currentPage , totalItemCount);
     }
   }
 
